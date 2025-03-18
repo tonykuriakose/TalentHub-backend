@@ -19,3 +19,6 @@
 [submodule "services/job-service"]
 	path = services/job-service
 	url = https://github.com/tonykuriakose/TalentHub_job-service.git
+[submodule "services/gateway"]
+	path = services/gateway
+	url = https://github.com/tonykuriakose/TalentHub-gateway.git
