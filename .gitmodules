@@ -10,3 +10,15 @@
 [submodule "services/user-service"]
 	path = services/user-service
 	url = https://github.com/tonykuriakose/TalentHub_user-service.git
+[submodule "services/payment-service"]
+	path = services/payment-service
+	url = https://github.com/tonykuriakose/TalentHub_payment-service.git
+[submodule "services/shared-library"]
+	path = services/shared-library
+	url = https://github.com/tonykuriakose/TalentHub_shared-library.git
+[submodule "services/chat-service"]
+	path = services/chat-service
+	url = https://github.com/tonykuriakose/TalentHub_chat-service.git
+[submodule "services/job-service"]
+	path = services/job-service
+	url = https://github.com/tonykuriakose/TalentHub_job-service.git
