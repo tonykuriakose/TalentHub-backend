@@ -1,0 +1,55 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+ name: talenthub-backend
+
+ build:
+  artifacts:
+   - image: talenthub/gateway
+     context: services/gateway
+     docker:
+      dockerfile: dockerfile
+
+   - image: talenthub/user-service
+     context: services/user-service
+     docker:
+      dockerfile : Dockerfile
+
+   - image: talenthub/profile-service
+     context: services/profile-service
+     docker: 
+      dockerfile: Dockerfile
+
+   - image: talenthub/job-service
+     context: services/job-service
+     docker:
+      dockerfile: Dockerfile
+
+   - image: talenthub/payment-service
+     context: services/payment-service
+     docker: 
+      dockerfile: Dockerfile
+
+   - image: talenthub/chat-service
+     context: services/chat-service
+     docker: 
+      dockerfile: Dockerfile
+
+   - image: talenthub/notification-service
+     context: services/notification-service
+     docker:
+      dockerfile: Dockerfile
+
+manifests:
+ rawYaml:
+  - k8s/gateway.yaml
+  - k8s/user-service.yaml
+  - k8s/profile-service.yaml
+  - k8s/job-service.yaml
+  - k8s/payment-service.yaml
+  - k8s/notification-service.yaml
+  - k8s/chat-service.yaml
+
+deploy:
+ kubectl: {}
+
