@@ -1,55 +1,55 @@
-apiVersion: skaffold/v4beta6
-kind: Config
-metadata:
- name: talenthub-backend
+version: "3.9"
 
- build:
-  artifacts:
-   - image: talenthub/gateway
-     context: services/gateway
-     docker:
-      dockerfile: dockerfile
+services:
+  user-service:
+    build:
+      context: ./services/user-service
+      target: development  # or "production"
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - MONGO_URI=mongodb://mongo:27017/user-db
+    volumes:
+      - ./services/user-service:/app
+    depends_on:
+      - mongo
 
-   - image: talenthub/user-service
-     context: services/user-service
-     docker:
-      dockerfile : Dockerfile
+  profile-service:
+    build:
+      context: ./services/profile-service
+      target: development
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=development
+      - MONGO_URI=mongodb://mongo:27017/profile-db
+    volumes:
+      - ./services/profile-service:/app
+    depends_on:
+      - mongo
 
-   - image: talenthub/profile-service
-     context: services/profile-service
-     docker: 
-      dockerfile: Dockerfile
+  job-service:
+    build:
+      context: ./services/job-service
+      target: development
+    ports:
+      - "3003:3003"
+    environment:
+      - NODE_ENV=development
+      - MONGO_URI=mongodb://mongo:27017/job-db
+    volumes:
+      - ./services/job-service:/app
+    depends_on:
+      - mongo
 
-   - image: talenthub/job-service
-     context: services/job-service
-     docker:
-      dockerfile: Dockerfile
+  mongo:
+    image: mongo:7
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
 
-   - image: talenthub/payment-service
-     context: services/payment-service
-     docker: 
-      dockerfile: Dockerfile
-
-   - image: talenthub/chat-service
-     context: services/chat-service
-     docker: 
-      dockerfile: Dockerfile
-
-   - image: talenthub/notification-service
-     context: services/notification-service
-     docker:
-      dockerfile: Dockerfile
-
-manifests:
- rawYaml:
-  - k8s/gateway.yaml
-  - k8s/user-service.yaml
-  - k8s/profile-service.yaml
-  - k8s/job-service.yaml
-  - k8s/payment-service.yaml
-  - k8s/notification-service.yaml
-  - k8s/chat-service.yaml
-
-deploy:
- kubectl: {}
-
+volumes:
+  mongo-data:
